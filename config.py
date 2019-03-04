@@ -1,6 +1,6 @@
 # global config
 class Config:
-    pass
+    SECRET_KEY = 'mysecretkey' # this is for CSRF
 
 # dev env config
 class DevelopmentConfig(Config):

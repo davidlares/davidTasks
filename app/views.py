@@ -1,6 +1,8 @@
 # blueprint class -> flask core
 from flask import Blueprint
-from flask import render_template
+from flask import render_template, request
+# bringing forms
+from .forms import LoginForm
 
 page = Blueprint('page', __name__) # page (name of the context) (context of creation)
 
@@ -12,3 +14,12 @@ def page_not_found(error):
 def index():
     return render_template('index.html', title="Index")
     # return "Hello, World"
+
+@page.route('/login', methods=['GET','POST'])
+def login():
+    form = LoginForm(request.form) # with this param we can get form data
+    if request.method == 'POST' and form.validate():
+        print('New session created')
+        print(form.username.data) # getting the value -> form.nameField.data
+
+    return render_template('auth/login.html', title="Login", form=form)

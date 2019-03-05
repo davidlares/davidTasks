@@ -1,10 +1,11 @@
 #only . because the __init__
 import datetime
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 from . import db
 
 # users table representation
-class User(db.Model):
+class User(db.Model, UserMixin): # Mixin for generating the Session
     __tablename__ = 'users'
     # attrs -> database columns
     id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +34,9 @@ class User(db.Model):
 
         return user
 
+    def verify_password(self,password):
+        return check_password_hash(self.encrypted_password, password)
+
     @classmethod
     def get_by_username(cls,username):
         return User.query.filter_by(username=username).first()
@@ -40,3 +44,7 @@ class User(db.Model):
     @classmethod
     def get_by_email(cls,email):
         return User.query.filter_by(email=email).first()
+
+    @classmethod
+    def get_by_id(cls,id):
+        return User.query.filter_by(id=id).first()

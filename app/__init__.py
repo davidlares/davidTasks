@@ -4,6 +4,7 @@ from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_wtf.csrf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 app = Flask(__name__)
 
@@ -11,6 +12,7 @@ db = SQLAlchemy()
 csrf = CSRFProtect()
 # bootstrap instance
 bootstrap = Bootstrap()
+login_manager = LoginManager()
 
 from .views import page # getting the views from the page object
 from .models import User
@@ -21,6 +23,9 @@ def create_app(config):
     csrf.init_app(app) # CSRF init
     bootstrap.init_app(app) # bootstrap init
     app.register_blueprint(page) # indicate the routes
+    login_manager.init_app(app)
+    login_manager.login_view = '.login' # URL for auth redirect (url_for)
+    login_manager.login_message = 'Login required'
 
     # like a try/catch
     with app.app_context():

@@ -5,6 +5,7 @@ class Config:
 # dev env config
 class DevelopmentConfig(Config):
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost/flask_tasks'
 
 config = {
     'development': DevelopmentConfig,

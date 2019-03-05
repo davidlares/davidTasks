@@ -32,3 +32,11 @@ class User(db.Model):
         db.session.commit() # confirm insertion
 
         return user
+
+    @classmethod
+    def get_by_username(cls,username):
+        return User.query.filter_by(username=username).first()
+
+    @classmethod
+    def get_by_email(cls,email):
+        return User.query.filter_by(email=email).first()

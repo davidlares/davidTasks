@@ -1,6 +1,6 @@
 # python class forms
 from wtforms import Form
-from wtforms import StringField, PasswordField, BooleanField
+from wtforms import StringField, PasswordField, BooleanField, TextAreaField
 from wtforms import validators
 from wtforms.fields.html5 import EmailField
 
@@ -59,3 +59,13 @@ class RegisterForm(Form):
             self.password.errors.append('Password is too short')
             return False
         return True
+
+class TaskForm(Form):
+    title = StringField('Title', [
+        validators.length(min=4,max=50,message='Title out of range'),
+        validators.DataRequired(message='Title required')
+    ])
+
+    description = TextAreaField('Description', [
+        validators.DataRequired(message='Description required')
+    ], render_kw={'rows': 5})

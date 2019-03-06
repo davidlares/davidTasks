@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+{% from 'helpers/_forms.html' import render_field %}
+
+{% block container %}
+  <div class="col-md-12 col-md-offset-1">
+    <h3>Show Task</h3>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{task.title}}</h5>
+        <p class="card-text">{{task.description}}</p>
+      </div>
+
+      {% if current_user.is_authenticated and task.user_id == current_user.id %}
+      <a href="{{ url_for('.edit_tasks', task_id=task.id) }}" class="btn btn-primary">Edit</a>
+      <a href="{{ url_for('.delete_tasks', task_id=task.id) }}" class="btn btn-danger">Delete</a>
+      {% endif %}
+
+    </div>
+  </div>
+{% endblock %}

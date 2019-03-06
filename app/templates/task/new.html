@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% from 'helpers/_forms.html' import render_field %}
+
+{% block container %}
+  <div class="col-md-12 col-md-offset-1">
+    <h3>New Task</h3>
+    <form class="" method="POST">
+
+        <!-- csrf -->
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+
+        <div class="form-group">
+          {{render_field(form.title, class='form-control', placeholder='Title')}}
+        </div>
+        <div class="form-group">
+          {{render_field(form.description, class='form-control', placeholder='Description')}}
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" name="button" type="submit">Create Task</button>
+        </div>
+    </form>
+  </div>
+{% endblock %}

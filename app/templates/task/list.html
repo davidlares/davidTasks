@@ -1,5 +1,50 @@
 {% extends 'layout.html' %}
 
 {% block container %}
+<div class="d-inline-block">
   <h3>Task lists</h3>
+  <a href="{{url_for('.new_tasks')}}">New Task</a>
+  <br>
+</div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in task_list %}
+        <tr>
+          <td>
+            <a href="{{ url_for('.get_task', task_id=task.id) }}">
+              {{task.title}}
+            </a>
+          </td>
+          <td>{{task.excerpt_description}}</td>
+          <td>
+            <a href="{{url_for('.edit_tasks', task_id=task.id )}}" class="btn btn-primary">Edit</a>
+            <a href="{{url_for('.delete_tasks', task_id=task.id )}}" class="btn btn-danger">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <nav>
+    <ul class="pagination">
+      {% if pagination.has_prev %}
+        <li>
+          <a href="{{ url_for('.tasks', page=page-1) }}" class="page-link">Previous</a>
+        </li>
+      {% endif %}
+
+      {% if pagination.has_next %}
+        <li class="page-item">
+          <a href="{{ url_for('.tasks', page=page+1) }}" class="page-link">Next</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
 {% endblock %}

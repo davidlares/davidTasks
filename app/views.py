@@ -8,6 +8,9 @@ from .models import User, Task
 from .forms import LoginForm, RegisterForm, TaskForm
 from . import login_manager
 
+# email
+from .email import welcome_email
+
 page = Blueprint('page', __name__) # page (name of the context) (context of creation)
 
 @login_manager.user_loader
@@ -58,6 +61,10 @@ def register():
         if form.validate():
             user = User.create_element(form.username.data, form.password.data, form.email.data)
             flash("user created successfully")
+            # FIX: generate session
+            login_user(user)
+            # sending email
+            welcome_email(user)
     return render_template('auth/register.html', title='Register', form=form)
 
 @page.route('/logout')

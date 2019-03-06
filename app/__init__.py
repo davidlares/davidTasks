@@ -17,7 +17,7 @@ bootstrap = Bootstrap()
 login_manager = LoginManager()
 
 from .views import page # getting the views from the page object
-from .models import User
+from .models import User, Task
 
 def create_app(config):
     app.config.from_object(config) # we get the DEBUG = True attr

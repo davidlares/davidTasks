@@ -62,6 +62,8 @@ class Task(db.Model):
     # One to many Relationship
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     created_at = db.Column(db.DateTime, default=datetime.datetime.now())
+    # table column to be created with migration
+    updated_at = db.Column(db.DateTime)
 
     @property
     def excerpt_description(self):

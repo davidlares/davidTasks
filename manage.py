@@ -14,8 +14,19 @@ def make_shell_context():
 
 if __name__ == "__main__":
     manager = Manager(app) # Manager instance (flask instance)
-    # create commands for the shell 
+    # create commands for the shell
     manager.add_command('shell', Shell(make_context=make_shell_context))
+
+    # test shell addon
+    @manager.command
+    def first_test():
+        import unittest
+        # external file
+        tests = unittest.TestLoader().discover('tests') # py module
+        unittest.TextTestRunner().run(tests)
+
+        # run it like: python manage.py [test function]
+
     manager.run()
 
 # run the manager
